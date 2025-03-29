@@ -1,0 +1,29 @@
+{
+    "name": "ai-assignment-platform-server",
+    "version": "1.0.0",
+    "description": "Backend for AI assignment integration platform",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js",
+        "dev-alt": "PORT=9000 nodemon server.js",
+        "start-alt": "PORT=9000 node server.js"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "multer": "^1.4.5-lts.1",
+        "node-cache": "^5.1.2",
+        "openai": "^4.90.0",
+        "pdf-parse": "^1.1.1",
+        "pdfjs-dist": "^5.0.375",
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.22"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

@@ -1,0 +1,155 @@
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.upload-card {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
+
+.subtitle {
+  color: var(--dark-gray);
+  margin-bottom: 2rem;
+}
+
+.file-upload-area {
+  border: 2px dashed var(--medium-gray);
+  border-radius: var(--border-radius);
+  padding: 2.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.file-upload-area:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(66, 133, 244, 0.05);
+}
+
+.file-input {
+  display: none;
+}
+
+.file-label {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.file-label:hover {
+  background-color: #3b78e7;
+}
+
+.file-preview {
+  background-color: var(--light-gray);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem;
+}
+
+.upload-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+.upload-button:hover:not(:disabled) {
+  background-color: #3b78e7;
+}
+
+.feature-highlights {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.feature {
+  padding: 1.5rem;
+  background-color: var(--light-gray);
+  border-radius: var(--border-radius);
+}
+
+.feature h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
+/* Add these styles to your TeacherUpload.css file */
+
+.upload-progress {
+  background-color: var(--light-gray);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(66, 133, 244, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s linear infinite;
+}
+
+.upload-step {
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.file-label.disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

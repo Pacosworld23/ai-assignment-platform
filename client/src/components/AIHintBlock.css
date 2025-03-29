@@ -1,0 +1,146 @@
+.ai-hint-block {
+  margin-top: 2rem;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+}
+
+.hint-mode {
+  background-color: #e8f5e9;
+}
+
+.guidance-mode {
+  background-color: #fff8e1;
+}
+
+.hint-mode h3 {
+  color: #2e7d32;
+}
+
+.guidance-mode h3 {
+  color: #ff8f00;
+}
+
+.instructor-guidance {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #673ab7;
+}
+
+.instructor-guidance h4 {
+  color: #673ab7;
+  margin-bottom: 0.5rem;
+}
+
+.ai-prompt-container {
+  margin-top: 1rem;
+}
+
+.prompt-input-area {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .prompt-input-area {
+    flex-direction: column;
+  }
+}
+
+.prompt-input {
+  flex: 1;
+  min-height: 80px;
+  padding: 1rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.hint-mode .prompt-input:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+}
+
+.guidance-mode .prompt-input:focus {
+  border-color: #ff8f00;
+  box-shadow: 0 0 0 2px rgba(255, 143, 0, 0.2);
+}
+
+.prompt-button {
+  align-self: flex-end;
+  height: 2.5rem;
+  min-width: 120px;
+}
+
+.hint-mode .prompt-button {
+  background-color: #2e7d32;
+  color: white;
+}
+
+.hint-mode .prompt-button:hover:not(:disabled) {
+  background-color: #1b5e20;
+}
+
+.guidance-mode .prompt-button {
+  background-color: #ff8f00;
+  color: white;
+}
+
+.guidance-mode .prompt-button:hover:not(:disabled) {
+  background-color: #f57c00;
+}
+
+.ai-conversation-history {
+  margin-top: 1.5rem;
+}
+
+.ai-conversation-history h4 {
+  margin-bottom: 1rem;
+}
+
+.conversation-item {
+  margin-bottom: 1.5rem;
+  background-color: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.user-prompt {
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid var(--medium-gray);
+}
+
+.ai-response {
+  padding: 1rem;
+  white-space: pre-line;
+}
+/* Add these styles to your AIHintBlock.css file */
+
+.loading-text {
+  display: inline-flex;
+  align-items: center;
+}
+
+.loading-dots:after {
+  content: '.';
+  animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+  0%, 20% {
+    content: '.';
+  }
+  40% {
+    content: '..';
+  }
+  60% {
+    content: '...';
+  }
+  80%, 100% {
+    content: '';
+  }
+}
