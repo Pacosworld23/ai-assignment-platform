@@ -74,3 +74,72 @@
   color: #c62828;
   font-size: 0.9rem;
 }
+/* Add to existing CSS */
+.question-answer-block.locked .answer-input {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
+
+.locked-label {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  background-color: #f8d7da;
+  color: #721c24;
+  margin-left: 0.5rem;
+}
+
+.locked-message {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background-color: #f8d7da;
+  border-radius: var(--border-radius);
+  color: #721c24;
+  font-size: 0.9rem;
+  
+}
+/* Add these styles to QuestionBlock.css */
+.table-container {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  background-color: #f9f9f9;
+  border-radius: var(--border-radius);
+  padding: 0.5rem;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+}
+
+.data-table td {
+  border: 1px solid #e0e0e0;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.data-table .header-row td {
+  background-color: #f1f1f1;
+  font-weight: 500;
+}
+/* Replace the problematic CSS with this */
+.data-table td {
+  border: 1px solid #e0e0e0;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+/* Right-align cells that typically contain numbers */
+.data-table td:nth-child(n+2) {
+  text-align: right;
+}
+
+/* But allow specific numeric columns to be left-aligned when needed */
+.data-table td.text-left {
+  text-align: left;
+}

@@ -1,3 +1,6 @@
+/* Import Material Icons */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 .student-view {
   max-width: 1000px;
   margin: 0 auto;
@@ -20,18 +23,91 @@
   color: var(--dark-gray);
 }
 
-.questions-container {
+.global-instructions-toggle {
+  margin: 1rem 0;
+}
+
+.toggle-button {
+  background-color: white;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.toggle-button.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Question tabs styling - Horizontal navigation */
+.question-tabs {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  overflow-x: auto;
+  background-color: white;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  box-shadow: var(--shadow);
+  margin-bottom: 0;
+  padding: 0.5rem 0.5rem 0;
+}
+
+.question-tab {
+  background: var(--light-gray);
+  border: none;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  padding: 0.75rem 1.5rem;
+  margin-right: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 120px;
+  border-bottom: 3px solid transparent;
+  position: relative;
+}
+
+.question-tab:hover:not(:disabled) {
+  background-color: rgba(66, 133, 244, 0.1);
+}
+
+.question-tab.active {
+  background-color: white;
+  border-bottom: 3px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.question-tab.locked {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.lock-indicator {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 12px;
+}
+
+.lock-icon-small {
+  font-size: 14px;
+  color: #757575;
+}
+
+/* Active question container */
+.active-question-container {
+  background-color: white;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
   margin-bottom: 2rem;
 }
 
 .question-block {
-  background-color: white;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  padding: 2rem;
+  position: relative;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
 }
 
 .question-block h2 {
@@ -48,6 +124,105 @@
   line-height: 1.6;
 }
 
+/* Question navigation controls */
+.question-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--light-gray);
+}
+
+.nav-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.nav-button:hover:not(:disabled) {
+  background-color: #3b78e7;
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.question-indicator {
+  font-weight: 500;
+  color: var(--dark-gray);
+}
+
+/* Locked question styles */
+.question-block.locked {
+  position: relative;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  transition: all 0.3s;
+}
+
+.question-locked-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.lock-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  margin-bottom: 1rem;
+}
+
+.lock-icon i {
+  font-size: 28px;
+  color: #757575;
+}
+
+.question-locked-message p {
+  color: #757575;
+  font-size: 1.1rem;
+  max-width: 400px;
+}
+
+.question-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mark-complete-button {
+  background-color: #28a745;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.mark-complete-button:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.mark-complete-button:disabled {
+  background-color: #a3d9b1;
+  cursor: not-allowed;
+}
+
+/* Submission area */
 .submission-area {
   display: flex;
   justify-content: space-between;
@@ -61,6 +236,7 @@
   background-color: white;
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
+  transition: background-color 0.2s;
 }
 
 .save-button:hover {
@@ -72,6 +248,104 @@
   color: white;
 }
 
-.submit-button:hover {
+.submit-button:hover:not(:disabled) {
   background-color: #3b78e7;
+}
+
+.submit-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .question-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  
+  .question-tab {
+    flex: 0 0 auto;
+  }
+  
+  .question-navigation {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .nav-button {
+    width: 100%;
+  }
+}
+/* Global Instructions toggle button styles */
+.global-instructions-toggle {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.toggle-button {
+  background-color: white;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.toggle-button.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Table display related styles */
+.tables-container {
+  margin-bottom: 2rem;
+}
+
+.table-wrapper {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+
+.table-description {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.75rem;
+  text-align: center;
+  border: 1px solid var(--medium-gray);
+}
+
+.data-table th {
+  background-color: var(--light-gray);
+  font-weight: 500;
+}
+
+.data-table tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table-raw-text {
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 0.9rem;
+  background-color: var(--light-gray);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  overflow-x: auto;
 }

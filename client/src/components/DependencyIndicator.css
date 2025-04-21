@@ -1,0 +1,71 @@
+.dependency-indicator {
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #ffc107;
+  }
+  
+  .dependency-header {
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .dependency-icon {
+    font-size: 1.2rem;
+  }
+  
+  .dependency-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+  }
+  
+  .dependency-item {
+    padding: 0.75rem;
+    background-color: white;
+    margin-bottom: 0.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+  }
+  
+  .dependency-item.complete {
+    border-left: 3px solid #28a745;
+  }
+  
+  .dependency-item.incomplete {
+    border-left: 3px solid #dc3545;
+  }
+  
+  .status-badge {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    margin-left: 0.75rem;
+    flex-shrink: 0;
+  }
+  
+  .status-badge.complete {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-badge.incomplete {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .dependency-note {
+    font-size: 0.9rem;
+    margin: 0;
+    color: #6c757d;
+    font-style: italic;
+  }

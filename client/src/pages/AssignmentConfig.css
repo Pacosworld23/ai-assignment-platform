@@ -5,9 +5,50 @@
   padding: 2rem;
 }
 
+.config-tabs {
+  display: flex;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--medium-gray);
+}
+
+.tab-button {
+  padding: 1rem 2rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--dark-gray);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-button.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  font-weight: 500;
+}
+
 .instructions {
   color: var(--dark-gray);
   margin-bottom: 2rem;
+}
+
+.global-instructions-input {
+  width: 100%;
+  min-height: 200px;
+  padding: 1rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: vertical;
+  margin-bottom: 2rem;
+}
+
+.global-instructions-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
 }
 
 .questions-list {
@@ -35,7 +76,7 @@
   margin-bottom: 1.5rem;
 }
 
-.ai-options h4 {
+.ai-options h4, .custom-prompt h4, .dependencies-section h4 {
   margin-bottom: 0.75rem;
 }
 
@@ -74,13 +115,21 @@
   font-size: 0.9rem;
   color: var(--dark-gray);
 }
+.options-container {
+  display: flex;
+  gap: 2rem; /* Space between the two columns */
+}
+
+.column {
+  flex: 1; /* Each column takes up equal space */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between items in the column */
+}
 
 .custom-prompt {
   margin-top: 1.5rem;
-}
-
-.custom-prompt h4 {
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .custom-prompt textarea {
@@ -90,6 +139,72 @@
   border: 1px solid var(--medium-gray);
   border-radius: var(--border-radius);
   font-size: 1rem;
+  resize: vertical;
+}
+
+.dependencies-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--medium-gray);
+}
+
+.dependencies-section .description {
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+  margin-bottom: 1rem;
+}
+
+.dependency-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.dependency-option {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: white;
+  border-radius: var(--border-radius);
+}
+
+.dependency-option input[type="checkbox"] {
+  margin-right: 0.75rem;
+}
+
+.dependency-option label {
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.required-for-next {
+  padding: 1rem;
+  background-color: #e3f2fd;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: flex-start;
+}
+
+.required-for-next input[type="checkbox"] {
+  margin-top: 0.25rem;
+  margin-right: 0.75rem;
+}
+
+.required-for-next label {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.required-for-next label strong {
+  margin-bottom: 0.25rem;
+  color: #1565c0;
+}
+
+.required-for-next label span {
+  font-size: 0.9rem;
+  color: var(--dark-gray);
 }
 
 .action-buttons {
@@ -115,4 +230,93 @@
 
 .save-button:hover:not(:disabled) {
   background-color: #3b78e7;
+}
+/* Add these styles to your existing AssignmentConfig.css file */
+
+/* Dependency dropdown styles */
+.dependencies-section {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.dependencies-section h4 {
+  margin-bottom: 0.75rem;
+}
+
+.dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: white;
+  border: 1px solid var(--medium-gray);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.dropdown-header:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(66, 133, 244, 0.05);
+}
+
+.dropdown-arrow {
+  color: var(--primary-color);
+  font-size: 0.8rem;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid var(--medium-gray);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dropdown-description {
+  padding: 0.75rem;
+  margin: 0;
+  border-bottom: 1px solid var(--medium-gray);
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+  background-color: var(--light-gray);
+}
+
+.dependency-options {
+  padding: 0.5rem;
+}
+
+.dependency-option {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.5rem;
+  margin-bottom: 0.25rem;
+  border-radius: var(--border-radius);
+  transition: background-color 0.2s;
+}
+
+.dependency-option:hover {
+  background-color: var(--light-gray);
+}
+
+.dependency-option input[type="checkbox"] {
+  margin-right: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.dependency-option label {
+  cursor: pointer;
+  flex-grow: 1;
+  line-height: 1.4;
 }
