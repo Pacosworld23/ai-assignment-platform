@@ -349,3 +349,144 @@
   border-radius: var(--border-radius);
   overflow-x: auto;
 }
+.student-view {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.assignment-header {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.assignment-header h1 {
+  margin-bottom: 1rem;
+}
+
+.assignment-header .instructions {
+  color: var(--dark-gray);
+}
+
+.questions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.question-block {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
+
+.question-block h2 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.question-text {
+  background-color: var(--light-gray);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.submission-area {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.save-button {
+  background-color: white;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.save-button:hover {
+  background-color: rgba(66, 133, 244, 0.1);
+}
+
+.submit-button {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #3b78e7;
+}
+
+.submission-confirmation {
+  text-align: center;
+  width: 100%;
+}
+
+.submission-confirmation h3 {
+  color: var(--secondary-color);
+  margin-bottom: 1.5rem;
+}
+
+.grade-display {
+  background-color: var(--light-gray);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  margin-top: 1.5rem;
+}
+
+.grade-score {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin: 1rem 0;
+}
+
+.grade-breakdown {
+  margin: 1.5rem 0;
+  text-align: left;
+}
+
+.criterion-grade {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  background-color: white;
+  border-radius: var(--border-radius);
+}
+
+.criterion-name {
+  font-weight: 500;
+}
+
+.criterion-score {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.grade-feedback {
+  text-align: left;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: var(--border-radius);
+}
+
+.grade-feedback h5 {
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+}
+
+.grade-feedback p {
+  line-height: 1.6;
+}

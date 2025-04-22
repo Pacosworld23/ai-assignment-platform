@@ -5,6 +5,7 @@ import './TeacherUpload.css';
 
 const TeacherUpload = ({ setCurrentAssignment }) => {
   const [file, setFile] = useState(null);
+  const [rubricFile, setRubricFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState('');
@@ -19,6 +20,18 @@ const TeacherUpload = ({ setCurrentAssignment }) => {
     } else {
       setFile(null);
       setError('Please select a valid PDF file');
+    }
+  };
+  
+  const handleRubricChange = (e) => {
+    const selectedFile = e.target.files[0];
+    
+    if (selectedFile && selectedFile.type === 'application/pdf') {
+      setRubricFile(selectedFile);
+      setError('');
+    } else {
+      setRubricFile(null);
+      setError('Please select a valid PDF file for the rubric');
     }
   };
 
@@ -38,6 +51,11 @@ const TeacherUpload = ({ setCurrentAssignment }) => {
       // Create form data for file upload
       const formData = new FormData();
       formData.append('assignment', file);
+      
+      // Add rubric if one was uploaded
+      if (rubricFile) {
+        formData.append('rubric', rubricFile);
+      }
       
       // Send the PDF to the backend for processing with progress tracking
       const response = await axios.post('/api/assignments/upload', formData, {
@@ -74,13 +92,14 @@ const TeacherUpload = ({ setCurrentAssignment }) => {
       <div className="upload-card">
         <h1>Upload Assignment</h1>
         <p className="subtitle">
-          Upload your assignment PDF to begin configuring AI integration for your students.
+          Upload your assignment to begin configuring AI integration for your students.
         </p>
         
         <form onSubmit={handleSubmit}>
           <div className="file-upload-area">
             <input 
               type="file" 
+              name="assignment"
               id="assignment-upload" 
               accept=".pdf" 
               onChange={handleFileChange}
@@ -94,10 +113,39 @@ const TeacherUpload = ({ setCurrentAssignment }) => {
           
           {file && !uploading && (
             <div className="file-preview">
-              <p>Selected file: {file.name}</p>
+              <p>Selected assignment: {file.name}</p>
               <p>Size: {(file.size / 1024 / 1024).toFixed(2)} MB</p>
             </div>
           )}
+          
+          <div className="rubric-section">
+            <h3>Upload Grading Rubric (Optional)</h3>
+            <p className="rubric-subtitle">
+              Upload a grading rubric PDF to enable AI-powered grading of student submissions.
+            </p>
+            
+            <div className="file-upload-area rubric-upload">
+              <input 
+                type="file" 
+                name="rubric"
+                id="rubric-upload" 
+                accept=".pdf" 
+                onChange={handleRubricChange}
+                className="file-input"
+                disabled={uploading}
+              />
+              <label htmlFor="rubric-upload" className={`file-label ${uploading ? 'disabled' : ''}`}>
+                {rubricFile ? rubricFile.name : 'Choose Rubric PDF'}
+              </label>
+            </div>
+            
+            {rubricFile && !uploading && (
+              <div className="file-preview">
+                <p>Selected rubric: {rubricFile.name}</p>
+                <p>Size: {(rubricFile.size / 1024 / 1024).toFixed(2)} MB</p>
+              </div>
+            )}
+          </div>
           
           {uploading && (
             <div className="upload-progress">

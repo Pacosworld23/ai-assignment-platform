@@ -24,6 +24,9 @@ const StudentView = () => {
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
   // Track whether global instructions are displayed
   const [showGlobalInstructions, setShowGlobalInstructions] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [grade, setGrade] = useState(null);
   
   // Prevent copy/paste for questions with no AI allowed
   useEffect(() => {
@@ -89,7 +92,30 @@ const StudentView = () => {
       ...prev,
       [questionId]: answer
     }));
-    
+    const handleSubmitAssignment = async () => {
+      if (Object.values(studentAnswers).some(answer => !answer.trim())) {
+        alert('Please answer all questions before submitting.');
+        return;
+      }
+      
+      setSubmitting(true);
+      
+      try {
+        const response = await axios.post('/api/assignments/submit', {
+          assignmentId,
+          studentId: 'student123', // In a real app, get from auth context
+          answers: studentAnswers
+        });
+        
+        setGrade(response.data.grade);
+        setSubmitted(true);
+      } catch (err) {
+        console.error('Error submitting assignment:', err);
+        setError('Failed to submit assignment. Please try again.');
+      } finally {
+        setSubmitting(false);
+      }
+    };
     // Check if completing this question unlocks any other questions
     if (assignment) {
       // Get questions that depend on this one
@@ -439,21 +465,48 @@ const handleAIRequest = async (questionId, prompt) => {
       </div>
       
       <div className="submission-area">
-        <button 
-          className="save-button"
-          onClick={handleSaveProgress}  
-        >
-          Save Progress
-        </button>
-        <button 
-          className="submit-button"
-          onClick={handleSubmitAssignment}
-          disabled={Object.values(unlockedQuestions).some(unlocked => !unlocked)}
-        >
-          Submit Assignment
-        </button>
+        {!submitted ? (
+          <>
+            <button 
+              className="save-button"
+              onClick={handleSaveProgress}
+            >
+              Save Progress
+            </button>
+            <button 
+              className="submit-button"
+              onClick={handleSubmitAssignment}
+              disabled={submitting || Object.values(unlockedQuestions).some(unlocked => !unlocked)}
+            >
+              {submitting ? 'Submitting...' : 'Submit Assignment'}
+            </button>
+          </>
+        ) : (
+          <div className="submission-confirmation">
+            <h3>Assignment Submitted Successfully!</h3>
+            {grade && (
+              <div className="grade-display">
+                <h4>Your Grade</h4>
+                <div className="grade-score">{grade.totalScore}%</div>
+                <div className="grade-breakdown">
+                  {grade.criteria.map((criterion, index) => (
+                    <div key={index} className="criterion-grade">
+                      <span className="criterion-name">{criterion.name}</span>
+                      <span className="criterion-score">{criterion.achievedPoints}/{criterion.totalPoints}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="grade-feedback">
+                  <h5>AI Feedback</h5>
+                  <p>{grade.feedback}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
 };
+
 export default StudentView;

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TeacherUpload from './pages/TeacherUpload';
 import AssignmentConfig from './pages/AssignmentConfig';
 import StudentView from './pages/StudentView';
+import TeacherGradingReview from './pages/TeacherGradingReview';
 import Header from './components/Header';
 import './App.css';
 

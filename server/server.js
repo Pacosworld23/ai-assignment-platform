@@ -116,6 +116,65 @@ async function extractTextFromPDF(pdfPath) {
     throw error;
   }
 }
+// Function to parse rubric using OpenAI
+async function parseRubricWithAI(pdfText) {
+  // Check cache first
+  const cacheKey = `rubric-${Buffer.from(pdfText.substring(0, 500)).toString('base64')}`;
+  const cachedResult = apiCache.get(cacheKey);
+  if (cachedResult) {
+    console.log('Using cached rubric parsing result');
+    return cachedResult;
+  }
+
+  try {
+    console.log('Parsing rubric with OpenAI...');
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 20000);
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content: "You are an assistant that extracts grading criteria and rubrics from PDF text. Format your response as a JSON object with 'criteria' array where each criterion has 'name', 'description', 'points', and 'levels' (array of achievement levels with descriptions and point values)."
+        },
+        {
+          role: "user",
+          content: `Extract the grading rubric from the following text extracted from a PDF: \n\n${pdfText.substring(0, 4000)}\n\nFormat as JSON with grading criteria, points, and achievement levels.`
+        }
+      ],
+      response_format: { type: "json_object" },
+      max_tokens: 1000
+    }, { signal: controller.signal });
+    
+    clearTimeout(timeoutId);
+    
+    // Parse the JSON response
+    const result = JSON.parse(response.choices[0].message.content);
+    
+    // Cache the result
+    apiCache.set(cacheKey, result);
+    return result;
+  } catch (error) {
+    console.error('Error parsing rubric with AI:', error);
+    return {
+      criteria: [
+        {
+          name: "General Assessment",
+          description: "Overall quality and completeness",
+          points: 100,
+          levels: [
+            { level: "Excellent", points: 90-100, description: "Exceeds expectations" },
+            { level: "Good", points: 80-89, description: "Meets expectations" },
+            { level: "Fair", points: 70-79, description: "Partially meets expectations" },
+            { level: "Poor", points: 0-69, description: "Below expectations" }
+          ]
+        }
+      ]
+    };
+  }
+}
+
 // Add this helper function to detect tables
 function detectTables(textItems, pageView) {
   // Group items by vertical position (potential rows)
@@ -657,34 +716,40 @@ app.post('/api/ai/generate', async (req, res) => {
   }
 });
 
-// Upload and parse PDF assignment
-app.post('/api/assignments/upload', upload.single('assignment'), async (req, res) => {
+const uploadFields = upload.fields([
+  { name: 'assignment', maxCount: 1 },
+  { name: 'rubric', maxCount: 1 }
+]);
+
+app.post('/api/assignments/upload', uploadFields, async (req, res) => {
   try {
     console.log('PDF upload request received');
+    console.log('Incoming files:', req.files); // Debug log
     
-    if (!req.file) {
-      console.log('No file found in request');
-      return res.status(400).json({ error: 'No file uploaded' });
+    if (!req.files || !req.files['assignment'] || req.files['assignment'].length === 0) {
+      console.log('No assignment file found in request');
+      return res.status(400).json({ error: 'No assignment file uploaded' });
     }
     
-    console.log('File received:', req.file.originalname, 'Size:', req.file.size, 'bytes');
+    // Access the assignment file from req.files, not req.file
+    const assignmentFile = req.files['assignment'][0];
+    
+    console.log('Assignment file received:', assignmentFile.originalname);
     
     try {
       // Extract text from the PDF
       console.log('Extracting text from PDF...');
-      const pdfText = await extractTextFromPDF(req.file.path);
+      const pdfText = await extractTextFromPDF(assignmentFile.path);
       
       console.log('Extracted Text Preview:', pdfText.text?.slice(0, 300));
       console.log('PDF text extracted, full length:', pdfText.text?.length || 0);
-
-
       
-      // Use our new parser service instead of the old function
+      // Use your new parser service
       console.log('Parsing assignment with AI...');
       const parsedAssignment = await assignmentParserService.parseAssignment(pdfText);
+      
       console.log('Parsed assignment tables:', parsedAssignment.tables?.length || 0);
       console.log('Parsed assignment sample table:', JSON.stringify(parsedAssignment.tables?.[0], null, 2));
-
       
       // Create the assignment object to return
       const assignment = {
@@ -693,7 +758,7 @@ app.post('/api/assignments/upload', upload.single('assignment'), async (req, res
         globalInstructions: parsedAssignment.globalInstructions || "",
         questions: parsedAssignment.questions || [],
         tables: parsedAssignment.tables || [],
-        originalFile: req.file.path
+        originalFile: assignmentFile.path
       };
       
       console.log('Assignment processed successfully');
@@ -729,7 +794,7 @@ app.post('/api/assignments/upload', upload.single('assignment'), async (req, res
             requiredForNext: false
           }
         ],
-        originalFile: req.file.path
+        originalFile: assignmentFile.path
       };
       
       console.log('Using fallback assignment structure');
@@ -738,9 +803,7 @@ app.post('/api/assignments/upload', upload.single('assignment'), async (req, res
   } catch (error) {
     console.error('Error in upload handler:', error);
     res.status(500).json({ error: 'Failed to process the PDF file: ' + error.message });
-  }
-});
-
+  }});
 // Save assignment configuration
 app.post('/api/assignments/configure', (req, res) => {
   try {
@@ -934,5 +997,6 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
 module.exports = app;

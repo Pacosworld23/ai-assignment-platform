@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TableDisplay from '../components/TableDisplay';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './AssignmentConfig.css';
 
@@ -212,6 +212,7 @@ const AssignmentConfig = ({ assignment, setAssignment }) => {
         >
           Back
         </button>
+        
         <button 
           className="save-button" 
           onClick={handleSubmit}
@@ -220,6 +221,14 @@ const AssignmentConfig = ({ assignment, setAssignment }) => {
           {saving ? 'Saving...' : 'Save and Generate Student View'}
         </button>
       </div>
+       {/* Show button to review submissions */}
+       {assignment?.id && (
+        <div className="navigation-section">
+          <Link to={`/teacher-review/${assignment.id}`} className="review-button">
+            Review Student Submissions
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
