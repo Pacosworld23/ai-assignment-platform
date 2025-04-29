@@ -149,18 +149,6 @@
   padding-bottom: 3rem;
 }
 
-.ai-disclaimer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #fff8e1;
-  padding: 0.6rem 1rem;
-  font-size: 0.75rem;
-  color: #b76e00;
-  border-top: 1px solid #ffe0b2;
-  margin-top: 1rem;
-}
 
 .reflection-prompt {
   margin-top: 2rem;

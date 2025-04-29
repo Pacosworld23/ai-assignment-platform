@@ -23,3 +23,4 @@ PORT=9000 node server.js
 second: cd ~/ai-assignment-platform/client
 npm start
 
+

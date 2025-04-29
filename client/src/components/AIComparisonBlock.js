@@ -97,9 +97,6 @@ const AIComparisonBlock = ({ questionId, studentAnswer, aiResponse, onRequestAI 
               <h4>AI Answer</h4>
               <div className="answer-box ai-answer">
                 {aiResponse}
-                <div className="ai-disclaimer">
-                  <p>This AI response is provided for educational purposes only. It may contain errors or omissions.</p>
-                </div>
               </div>
             </div>
           </div>
